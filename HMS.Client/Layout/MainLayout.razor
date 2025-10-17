@@ -1,16 +1,49 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+@* These are the required MudBlazor providers for theming, popovers, dialogs, and snackbars. *@
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-        <article class="content px-4">
+@* MudLayout is the main container for your application, replacing the old "page" div. *@
+<MudLayout>
+    @* The top application bar, replacing the old "top-row" div. *@
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Typo="Typo.h5" Class="ml-3">My App</MudText>
+        <MudSpacer />
+        <a href="https://learn.microsoft.com/aspnet/core/" target="_blank" class="mud-button-root mud-button mud-button-text mud-button-text-inherit mud-button-text-size-medium mud-ripple">
+            About
+        </a>
+    </MudAppBar>
+
+    @* The navigation drawer/sidebar, replacing the old "sidebar" div. *@
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
+        @* The NavMenu component is now replaced with its contents directly inside the drawer. *@
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+            <MudNavLink Href="counter" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
+            <MudNavLink Href="weather" Icon="@Icons.Material.Filled.Cloud">Weather</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+
+    @* The main content area, replacing the "main" and "article" elements. *@
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4 pt-4">
             @Body
-        </article>
-    </main>
-</div>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    // This boolean controls the open/closed state of the navigation drawer.
+    private bool _drawerOpen = true;
+
+    // This method toggles the state of the drawer.
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
+
