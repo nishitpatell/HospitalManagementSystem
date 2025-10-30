@@ -1,0 +1,14 @@
+﻿@page "/"
+@inject NavigationManager NavManager
+
+@code {
+    protected override void OnInitialized()
+    {
+        // This logic is moved from App.razor.
+        // Now, only when a user lands on the root page (/)
+        // will they be redirected to your landing page.
+        // This preserves deep linking for all other pages and
+        // allows the authentication flow to work correctly.
+        NavManager.NavigateTo("/patient/landingpage");
+    }
+}

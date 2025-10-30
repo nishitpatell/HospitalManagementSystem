@@ -2,20 +2,34 @@
 
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        @* <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" /> *@
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+            <NotAuthorized>
+                @*
+                The RedirectToLogin component does not need a layout,
+                as it will just navigate the user away.
+                *@
+                <RedirectToLogin />
+            </NotAuthorized>
+            <Authorizing>
+                @*
+                We removed the nested <LayoutView> from here.
+                This content will now correctly render inside the
+                @Body of your MainLayout, fixing the MudBlazor error.
+                *@
+                <MudProgressCircular Indeterminate="true" />
+            </Authorizing>
+        </AuthorizeRouteView>
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
+        @*
+        This part is correct, as the NotFound tag is separate
+        and needs to explicitly define its layout.
+        *@
         <LayoutView Layout="@typeof(MainLayout)">
             <p role="alert">Sorry, there's nothing at this address.</p>
         </LayoutView>
     </NotFound>
 </Router>
-
-@code {
-    protected override void OnInitialized()
-    {
-        NavManager.NavigateTo("/patient/landingpage");
-    }
-}

@@ -1,0 +1,20 @@
+﻿@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<AuthorizeView>
+    <Authorized>
+        <MudText Typo="Typo.subtitle1" Class="mr-3">Hello, @context.User.Identity?.Name!</MudText>
+        <MudButton OnClick="BeginLogOut" Color="Color.Inherit" Variant="Variant.Outlined">Log out</MudButton>
+    </Authorized>
+    <NotAuthorized>
+        <MudButton Href="authentication/login" Color="Color.Inherit" Variant="Variant.Outlined">Log in</MudButton>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private async Task BeginLogOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
+    }
+}
