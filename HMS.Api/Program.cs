@@ -4,8 +4,7 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //This means it will look for an Authorization: Bearer <token...> header in every request.
     .AddJwtBearer(options =>
     {
         options.Authority = "http://localhost:8080/realms/HMS"; // KeyCloak realm 
