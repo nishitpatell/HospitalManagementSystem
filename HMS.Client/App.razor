@@ -24,10 +24,6 @@
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
-        @*
-        This part is correct, as the NotFound tag is separate
-        and needs to explicitly define its layout.
-        *@
         <LayoutView Layout="@typeof(MainLayout)">
             <p role="alert">Sorry, there's nothing at this address.</p>
         </LayoutView>

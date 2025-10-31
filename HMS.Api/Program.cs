@@ -55,23 +55,21 @@ builder.Services.AddCors(options =>
                             .AllowAnyMethod());
 });
 builder.Services.AddControllers();
+builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.MapOpenApi();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/openapi/v1.json", "My API V1");
         // Optionally set c.RoutePrefix = string.Empty; to host at root
     });
-    app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
